@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Stress Evaluation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <a href="index.html" class="back-btn">←</a>
+            <h1>Stress Evaluation</h1>
+        </div>
+        <div class="content">
+            <div class="question">How stressed are you right now?</div>
+            <div class="stress-grid">
+                <div class="stress-option" onclick="selectStress(1)">
+                    <div class="number">1</div>
+                </div>
+                <div class="stress-option" onclick="selectStress(2)">
+                    <div class="number">2</div>
+                </div>
+                <div class="stress-option" onclick="selectStress(3)">
+                    <div class="number">3</div>
+                </div>
+                <div class="stress-option" onclick="selectStress(4)">
+                    <div class="number">4</div>
+                </div>
+                <div class="stress-option" onclick="selectStress(5)">
+                    <div class="number">5</div>
+                </div>
+            </div>
+            <button class="primary-btn" id="submitBtn" onclick="submitStress()" disabled style="opacity: 0.5;">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedStress = 0;
+
+        function selectStress(level) {
+            selectedStress = level;
+            document.querySelectorAll('.stress-option').forEach(opt => opt.classList.remove('selected'));
+            event.target.closest('.stress-option').classList.add('selected');
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').style.opacity = '1';
+        }
+
+        function submitStress() {
+            if (selectedStress === 0) return;
+            localStorage.setItem('stressLevel', selectedStress);
+            window.location.href = 'symptoms.html';
+        }
+    </script>
+</body>
+</html>

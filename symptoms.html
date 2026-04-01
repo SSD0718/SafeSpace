@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Symptoms</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .symptom-intro {
+            font-size: 16px;
+            color: #86868b;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .symptom-option {
+            border: 2px solid #e5e5ea;
+            border-radius: 16px;
+            padding: 16px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            text-align: center;
+        }
+        .symptom-option:active {
+            transform: scale(0.97);
+        }
+        .symptom-option.selected {
+            border-color: #4a90e2;
+            background: #e8f4ff;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+        }
+        .symptom-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+        .symptom-option.symptom-option.selected.symptom-label {
+            color: #4a90e2;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <a href="evaluate.html" class="back-btn">←</a>
+            <h1>Physical Symptoms</h1>
+        </div>
+        <div class="content">
+            <div class="question">What symptoms, if any, are you experiencing?</div>
+            <div class="symptom-intro">Select all that apply.</div>
+            <div class="symptom-grid">
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Headache</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Racing Heart</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Tense Muscles</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Shallow Breathing</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Sweating</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Fatigue</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Nausea</div>
+                </div>
+                <div class="symptom-option" onclick="toggleSymptom(this)">
+                    <div class="symptom-label">Dizziness</div>
+                </div>
+            </div>
+            <button class="primary-btn" onclick="submitSymptoms()">Next</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedSymptoms = [];
+
+        function toggleSymptom(el) {
+            el.classList.toggle('selected');
+            const label = el.querySelector('.symptom-label').textContent;
+            if (el.classList.contains('selected')) {
+                selectedSymptoms.push(label);
+            } else {
+                selectedSymptoms = selectedSymptoms.filter(s => s !== label);
+            }
+        }
+
+        function submitSymptoms() {
+            const baseStress = parseInt(localStorage.getItem('stressLevel')) || 3;
+            const adjustment = Math.floor(selectedSymptoms.length / 2);
+            const adjusted = Math.min(5, baseStress + adjustment);
+            localStorage.setItem('stressLevel', adjusted);
+            localStorage.setItem('symptoms', JSON.stringify(selectedSymptoms));
+            window.location.href = 'heartrate.html'
+        }
+
+    </script>
+
+</body>
+</html>

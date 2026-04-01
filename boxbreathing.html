@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Box Breathing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen active">
+            <div class="header">
+                <h1>Box Breathing</h1>
+            </div>
+            <div class="content">
+                <div class="breathing-container">
+                    <div class="breathing-instruction" id="breathingInstruction">INHALE</div>
+                    <div class="breathing-circle" id="breathingCircle">
+                        <div class="breathing-count" id="breathingCount">4</div>
+                    </div>
+                    <div class="breathing-stats">
+                        <div>Round <span id="currentRound">1</span> of <span id="totalRounds">4</span></div>
+                        <div class="breathing-progress">
+                            <div class="breathing-progress-bar" id="breathingProgress"></div>
+                        </div>
+                        <div>Time: <span id="breathingTime">0:00</span> / <span id="breathingTotal">3:00</span></div>
+                    </div>
+                    <button class="stop-btn" onclick="stopBreathing()">Stop Exercise</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stressLevel = parseInt(localStorage.getItem('stressLevel')) || 3;
+        const durations = { 1: { rounds: 2, seconds: 60 }, 2: { rounds: 3, seconds: 120 }, 3: { rounds: 4, seconds: 180}, 4: {rounds: 7, seconds: 300}, 5: { rounds: 15, seconds: 600} };
+        const breathingData = durations[stressLevel];
+
+        const circle = document.getElementById('breathingCircle');
+        const instruction =  document.getElementById('breathingInstruction');
+        const count =  document.getElementById('breathingCount');
+        const progress =  document.getElementById('breathingProgress');
+        const timeDisplay =  document.getElementById('breathingTime');
+        const totalDisplay =  document.getElementById('breathingTotal');
+        const roundDisplay =  document.getElementById('currentRound');
+        const totalRoundsDisplay =  document.getElementById('totalRounds');
+
+        totalRoundsDisplay.textContent = breathingData.rounds;
+        const totalMinutes = Math.floor(breathingData.seconds / 60);
+        const totalSecs = breathingData.seconds % 60;
+        totalDisplay.textContent = `${totalMinutes}:${totalSecs.toString().padStart(2, '0')}`;
+
+        setTimeout(() => {
+            circle.className = 'breathing-circle inhale';
+        }, 50)
+
+        let currentRound = 1;
+        let phase = 0;
+        let countdown = 4;
+        let totalElapsed = 0;
+
+        const phases = ['INHALE', 'HOLD', 'EXHALE', 'HOLD'];
+        const phaseClasses = ['inhale', 'hold', 'exhale', 'hold-after-exhale'];
+
+        const breathingInterval = setInterval( () => {
+            countdown--;
+            count.textContent = countdown;
+            totalElapsed++;
+
+            const minutes = Math.floor(totalElapsed / 60);
+            const seconds = totalElapsed % 60;
+            timeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            progress.style.width = ((totalElapsed / breathingData.seconds) * 100) + '%';
+
+            if (countdown === 0) {
+                phase = (phase + 1) % 4;
+                countdown = 4;
+
+                if(phase === 0) {
+                    currentRound++;
+                    roundDisplay.textContent = currentRound;
+                    if (currentRound > breathingData.rounds) {
+                        clearInterval(breathingInterval);
+                        alert('Great job! Exercise complete.');
+                        window.location.href = 'results.html';
+                        return;
+                    }
+                }
+
+                instruction.textContent = phases[phase];
+                circle.className = 'breathing-circle ' + phaseClasses[phase];
+            }
+        }, 1000);
+
+        function stopBreathing() {
+            clearInterval(breathingInterval);
+            window.location.href = 'results.html';
+        }
+    </script>
+</body>
+</html>

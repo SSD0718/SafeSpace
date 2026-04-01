@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Box Breathing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hr-input-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 30px 0 30px;
+        }
+        .hr-input {
+            width: 130px;
+            padding: 18px 12px;
+            font-size: 42px;
+            font-family: inherit;
+            font-weight: 700;
+            color: #4a90e2;
+            border: 2px solid #e5e5ea;
+            border-radius: 16px;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .hr-input::-webkit-outer-spin-button,
+        .hr-input::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .hr-input:focus {
+            border-color: #4a90e2;
+        }
+        .hr-unit {
+            font-size: 18px;
+            color: #86868b;
+            font-weight: 600;
+        }
+        .hr-reference {
+            margin-bottom: 30px;
+        }
+        .hr-reference-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 14px;
+        }
+        .hr-range-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .hr-range-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            border-radius: 14px;
+            color: white;
+            font-weight: 600;
+        }
+        .hr-range-box:nth-child(1) { background: #4a90e2; }
+        .hr-range-box:nth-child(2) { background: #74aee9; }
+        .hr-range-box:nth-child(3) {background: #a0c8f0;}
+        .hr-range-name {
+            font-size: 15px;
+        }
+        .hr-range-bpm {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <a href="symptoms.html" class="back-btn">←</a>
+            <h1>Heart Rate</h1>
+        </div>
+        <div class="content">
+            <div class="question">What is your current resting heart rate?</div>
+
+            <div class="hr-input-wrapper">
+                <input class="hr-input" type="number" id="hrInput" min="30" max="220" placeholder=" " oninput="checkInput()">
+                <span class="hr-input">bpm</span>
+            </div>
+
+            <div class="hr-reference">
+                <div class="hr-reference-title">Reference Resting Rates</div>
+                <div class="hr-range-list">
+                    <div class="hr-range-box">
+                        <span class="hr-range-name">Normal</span>
+                        <span class="hr-range-bpm">60 - 100 bpm</span>
+                    </div>
+                    <div class="hr-range-box">
+                        <span class="hr-range-name">Elevated</span>
+                        <span class="hr-range-bpm">100 - 120 bpm</span>
+                    </div>
+                    <div class="hr-range-box">
+                        <span class="hr-range-name">High</span>
+                        <span class="hr-range-bpm">120+ bpm</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="primary-btn" id="submitBtn" onclick="submitHR()" disabled style="opacity:0.5;">Next</button>
+        </div>
+    </div>
+
+    <script>
+        function checkInput() {
+            const hr = parseInt(document.getElementById('hrInput').value);
+            const btn = document.getElementById('submitBtn');
+            if (hr && hr >= 30 && hr <220) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+            }
+        }
+
+        function submitHR() {
+            const hr = parseInt(document.getElementById('hrInput').value);
+            const currentStress = parseInt(localStorage.getItem('stressLevel')) || 3;
+
+            let adjustment = 0;
+            if (hr > 120) adjustment = 1;
+            else if (hr < 60) adjustment = -1;
+
+            const adjusted = Math.min(5, Math.max(1, currentStress + adjustment));
+            localStorage.setItem('stressLevel', adjusted);
+            localStorage.setItem('heartRate', hr);
+            window.location.href = 'results.html';
+        }
+
+    </script>
+
+</body>
+</html>

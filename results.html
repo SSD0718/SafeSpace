@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Your Results</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen active">
+            <div class="header">
+                <a href="evaluate.html" class="back-btn">←</a>
+                <h1>Your Results</h1>
+            </div>
+            <div class="content">
+                <div class="result-card">
+                    <div class="result-level" id="resultLevel">MODERATE</div>
+                    <div class="result-description" id="result-description">Your cortisol levels are elevated (approx. 13 to 18 mcg/dL)</div>
+                </div>
+
+                <div class="section-title">Reccomended Relief Methods:</div>
+
+                <a href="boxbreathing.html" class="intervention-card">
+                    <div class="intervention-info">
+                        <div class="intervention-name">Box Breathing</div>
+                        <div class="intervention-duration" id="breathingDuration">3 minutes</div>
+                    </div>
+                    <div class="intervention-arrow">></div>
+                </a>
+
+                <a href="journal.html" class="intervention-card">
+                    <div class="intervention-info">
+                        <div class="intervention-name">Journal Your Thoughts</div>
+                        <div class="intervention-duration" id="journalDuration">5 minutes</div>
+                    </div>
+                    <div class="intervention-arrow">></div>
+                </a>
+
+                <a href="gethelp.html" class="intervention-card" id="getHelpCard" style="display:none;">
+                    <div class="intervention-info">
+                        <div class="intervention-name">Get Assistance</div>
+                        <div class="intervention-duration">Crisis resources & helplines available</div>
+                    </div>
+                    <div class="intervention-arrow">></div>
+                </a>
+
+                <a href="evaluate.html" class="secondary-btn">Check Stress Again</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stressLevel = parseInt(localStorage.getItem('stressLevel')) || 3;
+        const configs = {
+            1: {level: 'RELAXED', description: 'Your cortisol levels are low (approx. 3.5 to 7.5 mcg/dL) - you\'re doing great!', breathingDuration: '1 minute', journalDuration: '3 minutes'},
+            2: {level: 'MILD STRESS', description: 'Your cortisol levels are slightly elevated (approx. 7.5 to 14 mcg/dL)', breathingDuration: '2 minutes', journalDuration: '3 minutes'},
+            3: {level: 'MODERATE STRESS', description: 'Your cortisol levels are elevated (approx. 13 to 18 mcg/dL)', breathingDuration: '3 minutes', journalDuration: '5 minutes'},
+            4: {level: 'HIGH STRESS', description: 'Your cortisol is spiking (approx. 18 to 23. 5 mcg/dL) - Try taking action', breathingDuration: '5 minutes', journalDuration: '10 minutes'},
+            5: {level: 'EXTREME STRESS', description: 'Your cortisol levels are considerably high (approx. 23.5+ mcg/dL) - get help if available', breathingDuration: '10 minutes', journalDuration: '10 minutes'},
+        };
+
+        const config = configs[stressLevel];
+        document.getElementById('resultLevel').textContent = config.level;
+        document.getElementById('result-description').textContent = config.description;
+        document.getElementById('breathingDuration').textContent = config.breathingDuration;
+        document.getElementById('journalDuration').textContent = config.journalDuration;
+
+        if (stressLevel >= 4) {
+            document.getElementById('getHelpCard').style.display ='flex';
+        }
+
+    </script>
+</body>
+</html>

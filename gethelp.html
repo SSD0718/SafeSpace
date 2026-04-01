@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Box Breathing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .help-intro{
+            font-size: 15px;
+            color: #86868b;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        .help-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+        .help-card{
+            border: 1px solid #e5e5ea;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s;
+        }
+        a.help-card:active {
+            transform: scale(0.98);
+            background: #f5f5f7;
+        }
+        .help-card-info {
+            flex: 1;
+        }
+        .help-card-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 4px;
+        }
+        .help-card-detail {
+            font-size: 13px;
+            color: #86868b;
+        }
+        .help-card-action {
+            font-size: 15px;
+            font-weight: 700;
+            color: #4a90e2;
+            margin-left: 12px;
+            white-space: nowrap;
+        }
+        .primary-card {
+            background: #4a90e2;
+            border: none;
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            color: white;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.3);
+        }
+        .primary-card-label {
+            font-size: 13px;
+            opacity: 0.85;
+            margin-bottom: 6px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .primary-card-number {
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
+        }
+        .primary-card-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        .primary-card-link {
+            display: inline-block;
+            margin-top: 16px;
+            background: white;
+            color: #4a90e2;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 10px 28px;
+            border-radius: 30px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <a href="results.html" class="back-btn">←</a>
+            <h1>Get Assistance</h1>
+        </div>
+        <div class="content">
+            <div class="help-intro">Here are some resources that can assist you.</div>
+            <div class="primary-card">
+                <div class="primary-card-label">Mental Health Crisis Lifeline</div>
+                <div class="primary-card-number">988</div>
+                <div class="primary-card-desc">Call or text 988 to reach the 24/7 Suicide & Crisis lifeline.</div>
+                <a href="tel:988" class="primary-card-link">Call 988</a>
+            </div>
+
+            <div class="help-section-title">Additional Helplines</div>
+
+            <a href="tel:18006624357" class="help-card">
+                <div class="help-card-info">
+                    <div class="help-card-name">NAMI Helpline</div>
+                    <div class="help-card-detail">National Alliance on Mental Illness - Available 10am to 10pm ET</div>
+                </div>
+                <div class="help-card-action">Call</div>
+            </a>
+
+            <div class="help-card">
+                <div class="help-card-info">
+                    <div class="help-card-name">Crisis Text Line</div>
+                    <div class="help-card-detail">Text HOME to 741741 - Available 24/7</div>
+                </div>
+            </div>
+
+            <div class="help-section-title">Helpful Websites</div>
+
+            <a href="https://www.nimh.nih.gov/health/find-help" target="_blank" class="help-card">
+
+                <div class="help-card-info">
+                    <div class="help-card-name">NIMH Info</div>
+                    <div class="help-card-detail">National Institute of Mental Health resources page</div>
+                </div>
+                <div class="help-card-action">Visit</div>
+            </a>
+
+            <a href="https://988lifeline.org" target="_blank" class="help-card">
+                <div class="help-card-info">
+                    <div class="help-card-name">988lifeline.org</div>
+                    <div class="help-card-detail">Chat online with a counselor</div>
+                </div>
+                <div class="help-card-action">Visit</div>
+            </a>
+            <a href="results.html" class="secondary-btn" style="margin-top: 10px;">Back</a>
+        </div>
+    </div>
+</body>
+</html>

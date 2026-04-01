@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Journal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href= "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="screen active">
+            <div class="header">
+                <h1>Journal</h1>
+            </div>
+            <div class="content">
+                <div class="journal-prompt">What's causing your stress?</div>
+                <textarea class="journal-textarea" id="journalText" placeholder="Type your thoughts here..."></textarea>
+                <div class="journal-timer">Time: <span id="journalTime">0:00</span> / <span id="journalTotal">5:00</span></div>
+                <button class="primary-btn" onclick="finishJournal()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stressLevel = parseInt(localStorage.getItem('stressLevel')) || 3;
+        const durations = { 1: 180, 2: 180, 3: 300, 4: 600, 5: 600 };
+        const journalSeconds = durations[stressLevel];
+
+        const timeDisplay = document.getElementById('journalTime');
+        const totalDisplay = document.getElementById('journalTotal');
+
+        const totalMinutes = Math.floor(journalSeconds / 60);
+        const totalSecs = journalSeconds % 60;
+        totalDisplay.textContent = `${totalMinutes}:${totalSecs.toString().padStart(2, '0')}`;
+
+        let elapsed = 0;
+
+        const journalInterval  = setInterval(() => {
+            elapsed++;
+            const minutes = Math.floor(elapsed / 60);
+            const seconds = elapsed % 60;
+            timeDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+
+        function finishJournal() {
+            clearInterval(journalInterval);
+            document.getElementById('journalText').value = '';
+            alert('Great job! Journaling complete!');
+            window.location.href = 'results.html';
+        }
+    </script>
+</body>
+</html>
